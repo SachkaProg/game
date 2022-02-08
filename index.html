@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Игра</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<!-- <embed src="audio/audio.mp3" autostart="true" hidden="true" loop="false" width="300" height="65" align="bottom"> </embed> -->
+	<div class="game-wrap">
+		<div class="backg level">
+		<!-- <div class="timer"></div>  -->
+		<div class="hp"><div class="hp-line"></div></div>
+		<div class="back">
+			<!-- <div class="plat" style="bottom: 20vh; width: 1000px; left: 30vw;"></div> -->
+		</div>
+		<div class="back2">
+			
+		</div>
+
+
+		<div class="stars">
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+			<div class="star"></div>
+		</div>
+		</div>
+	</div>
+
+
+
+	<script>
+	$(document).ready(function() {
+		// Светлячки
+		function getRandomArbitrary(min, max) {
+			return Math.random() * (max - min) + min;
+		}
+		$(document).ready(function() {
+			$('body .star').each(function() {
+				var top = getRandomArbitrary(2, 98);
+				var right = getRandomArbitrary(2, 98);
+				$(this).css({top:top+'vh',right:right+'vw'});
+			});
+			setTimeout( function() {
+				$('body .star').each(function() {
+					var top = getRandomArbitrary(2, 98);
+					var right = getRandomArbitrary(2, 98);
+					$(this).css({top:top+'vh',right:right+'vw'});
+				});
+			} ,100)
+			setInterval( function() {
+				$('body .star').each(function() {
+					var top = getRandomArbitrary(2, 98);
+					var right = getRandomArbitrary(2, 98);
+					$(this).css({top:top+'vh',right:right+'vw'});
+				});
+			} ,10000)
+		})
+	});
+
+	</script>
+	<script src="js/script.js"></script>
+</body>
+</html>
