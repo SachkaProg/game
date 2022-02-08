@@ -1,6 +1,6 @@
 let gameWrap = document.querySelector('.game-wrap'),
 	fps = 1000 / 60,
-	deadline = 90,
+	deadline = 30,
 	seconds = 0,
 	minutes = 0,
 	pers = {
