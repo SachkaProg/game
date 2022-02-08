@@ -104,9 +104,9 @@ function intervals() {
 			pers.y += pers.jump_step;
 			pers.el.style.bottom = pers.y + 'px';	
 			setTimeout(() => {
-				pers.jump = false;
+				// pers.jump = false;
 				var some_y = 0;
-				if (Math.abs(pers.x - plat.x) < plat.w && Math.abs(pers.y - (plat.y + plat.h)) < 100) {
+				if (pers.x > plat.x && pers.x < (plat.x + plat.w)  && Math.abs(pers.y - (plat.y + plat.h)) < 100) {
 					some_y = 320;
 				} else {
 					some_y = 80;
@@ -125,7 +125,7 @@ function intervals() {
 					}
 					pers.y -= pers.jump_step;	
 					pers.el.style.bottom = pers.y + 'px';
-				})	
+				}, 10)	
 			}, pers.jump_speed)
 		}
 	}, fps)
@@ -166,10 +166,12 @@ function intervals() {
 			} else {
 				some_y = 80;
 			}	
-			pers.y = some_y;
-			pers.el.style.bottom = pers.y + 'px';
+			
+			pers.y = some_y 
+			
+			pers.el.style.bottom = pers.y + 'px';	
 		}
-	}, pers.jump_speed * 2)
+	}, fps)
 
 	ints.run = setInterval(()=> {
 		if (pers.run) {
