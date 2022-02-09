@@ -9,6 +9,21 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow-x:  hidden;
+	position: relative;
+
+}
+.door {
+	width: 400px;
+	height: 400px;
+	/*background: url(../img/back.jpg);*/
+	overflow-x:  hidden;
+	position: absolute;
+	right: 7vh;
+	bottom: 20px;
+	background: url(../img/door.png);
+
+	/*transition: 0.1s;*/
+	background-size: contain;
 }
 .backg {
 	width: 400vw;
@@ -60,12 +75,21 @@ body {
 	background: url(../img/plat.png);
 	background-size: cover;
 }
+.ice {
+	position: absolute;
+	height: 80px;
+	opacity: 0.9;
+	width: 2500px;
+	/*bottom: 0;*/
+	background: url(../img/ice.png);
+	/*background-size: cover;*/
+}
 .lava {
 	background: url(../img/lava.png);
 	position: absolute;
 	height: 80px;
 	/*opacity: 0.9;*/
-	width: 450px;
+	width: 1000px;
 	border-collapse:collapse;
 	background-size: contain;
 	-webkit-box-shadow: -2px -27px 44px 32px rgba(253, 172, 63, 0.2);

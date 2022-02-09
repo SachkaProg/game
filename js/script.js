@@ -1,6 +1,6 @@
 let gameWrap = document.querySelector('.game-wrap'),
 	fps = 1000 / 60,
-	deadline = 30,
+	deadline = 5,
 	seconds = 0,
 	minutes = 0,
 	pers = {
@@ -26,11 +26,17 @@ let gameWrap = document.querySelector('.game-wrap'),
 		jump: false
 	},
 	zel = {
-		x: 2380,
-		y: 320
+		x: 4800,
+		y: 80
 	},
 	plat = {
-		x: 2300,
+		x: 2400,
+		y: 120,
+		w: 500,
+		h: 200
+	},
+	plat2 = {
+		x: 5800,
 		y: 120,
 		w: 500,
 		h: 200
@@ -38,7 +44,13 @@ let gameWrap = document.querySelector('.game-wrap'),
 	lava ={
 		x: 2300,
 		y: 0,
-		w: 450,
+		w: 1000,
+		h: 80
+	},
+	ice ={
+		x: 5100,
+		y: 0,
+		w: 2500,
 		h: 80
 	},
 	timer = {
@@ -55,7 +67,7 @@ function intervals() {
 
 		// Зелье 
 		if (Math.abs(pers.x - zel.x) < 20 && Math.abs(pers.y - zel.y) < 20) {
-			zel.el.style.opacity = 0;	
+			// zel.el.style.opacity = 0;	
 			timer.seconds = 0;
 		}
 
@@ -70,32 +82,41 @@ function intervals() {
 					back.x += back.speed;
 					zel.x += back.speed;
 					plat.x += back.speed;
+					plat2.x += back.speed;
 					lava.x += back.speed;
+					ice.x += back.speed;
 
 
 					pers.el.style.left = pers.x + 'px';
 					back.el.style.left = back.x + 'px';
 					zel.el.style.left = zel.x + 'px';
 					plat.el.style.left = plat.x + 'px';
+					plat2.el.style.left = plat2.x + 'px';
 					lava.el.style.left = lava.x + 'px';
+					ice.el.style.left = ice.x + 'px';
 
 					break;
 				case 3:
 					console.log(pers.x, gameWrap.offsetWidth - 400)
 					if (pers.x > (gameWrap.offsetWidth - 400)) {
+						nextLevel();
 						return;
 					}
 					pers.x += pers.step;
 					back.x -= back.speed;
 					zel.x -= back.speed;
 					plat.x -= back.speed;
+					plat2.x -= back.speed;
 					lava.x -= back.speed;
+					ice.x -= back.speed;
 
 					pers.el.style.left = pers.x + 'px';
 					back.el.style.left = back.x  + 'px';
 					zel.el.style.left = zel.x + 'px';
 					plat.el.style.left = plat.x + 'px';
+					plat2.el.style.left = plat2.x + 'px';
 					lava.el.style.left = lava.x + 'px';
+					ice.el.style.left = ice.x + 'px';
 
 					break;
 			}
@@ -105,12 +126,14 @@ function intervals() {
 			pers.el.style.bottom = pers.y + 'px';	
 			setTimeout(() => {
 				// pers.jump = false;
-				var some_y = 0;
+				var some_y = 80;
 				if (pers.x > plat.x && pers.x < (plat.x + plat.w)  && Math.abs(pers.y - (plat.y + plat.h)) < 100) {
 					some_y = 320;
-				} else {
-					some_y = 80;
-				}	
+				} 
+				if (pers.x > plat2.x && pers.x < (plat2.x + plat2.w)  && Math.abs(pers.y - (plat2.y + plat2.h)) < 100) {
+					some_y = 320;
+				}
+					
 				const down_jump = setInterval(()=> {
 					if (Math.abs(some_y - pers.y) <= 20) {
 						pers.jump = false;
@@ -136,6 +159,16 @@ function intervals() {
 			hp.style.width = pers.health + '%';
 		}
 	}, 500);
+	ints.ice = setInterval(()=> {
+		if (pers.x > ice.x && pers.x < (ice.x + ice.w) && Math.abs(pers.y - (ice.y + ice.h)) < 20) {
+			console.log('ice')
+			pers.step = 2;
+			back.speed = 6;
+		} else {
+			pers.step = 10;
+			back.speed = 35;
+		}
+	}, fps);
 	ints.timer = setInterval(() => {
 		timer.seconds++;
 		if (timer.seconds == 60) {
@@ -161,11 +194,13 @@ function intervals() {
 	}, 1000);
 	ints.checkfloor = setInterval(()=> {
 		if (pers.jump == false) {
+			var some_y = 80;
 			if (pers.x > plat.x && pers.x < (plat.x + plat.w) && Math.abs(pers.y - (plat.y + plat.h)) < 100) {
 				some_y = 320;
-			} else {
-				some_y = 80;
-			}	
+			} 
+			if (pers.x > plat2.x && pers.x < (plat2.x + plat2.w) && Math.abs(pers.y - (plat2.y + plat2.h)) < 100) {
+				some_y = 320;
+			}
 			
 			pers.y = some_y 
 			
@@ -185,6 +220,10 @@ function intervals() {
 function gameOver() {
 	alert('Вы проиграли');
 	location.href = '/'		;
+}
+function nextLevel() {
+	// alert('След. уровень');
+	location.href = '/';
 }
 
 function controllers() {
@@ -222,16 +261,20 @@ function init() {
 	gameWrap.innerHTML += '<div class="pers" style="left: ' + pers.x + 'px; bottom: ' + pers.y + 'px" > ';
 	gameWrap.innerHTML += '<div class="platform"></div> ';
 	gameWrap.innerHTML += '<div class="lava" style="left: ' + lava.x + 'px; bottom: ' + lava.y + 'px"></div>';
+	gameWrap.innerHTML += '<div class="ice" style="left: ' + ice.x + 'px; bottom: ' + ice.y + 'px"></div>';
 	gameWrap.innerHTML += '<div class="timer"></div>';
 	gameWrap.innerHTML += '<div class="zel" style="left: ' + zel.x + 'px; bottom: ' + zel.y + 'px"><img src="img/zel.png" width="80px"></div>';
 	gameWrap.innerHTML += '<div class="plat" style="left: ' + plat.x + 'px; bottom: ' + plat.y + 'px"></div>';
+	gameWrap.innerHTML += '<div class="plat plat2" style="left: ' + plat.x + 'px; bottom: ' + plat.y + 'px"></div>';
 	pers.el = document.querySelector('.pers');
 	back.el = document.querySelector('.backg')
 	timer.el = document.querySelector('.timer')
 	hp = document.querySelector('.hp-line')
 	zel.el = document.querySelector('.zel')
 	plat.el = document.querySelector('.plat')
+	plat2.el = document.querySelector('.plat2')
 	lava.el = document.querySelector('.lava')
+	ice.el = document.querySelector('.ice')
 }
 
 function game() {
